@@ -56,7 +56,8 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
+    env: 
+       TF_CLOUD_TOKEN: ${{ secrets.JOE_TF_ACCESS }}
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -71,13 +72,14 @@ jobs:
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
-      with:
-        cli_config_credentials_token: ${{secrets.JOE_TF_ACCESS}}
+      
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-
+      env:
+        TF_CLI_CONFIG_FILE: ${{ github.workspace }}/.terraformrc
+        ATLAS_TOKEN: ${{ env.JOE_TF_ACCESS }}
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
       run: terraform fmt -check
