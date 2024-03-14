@@ -78,7 +78,7 @@ jobs:
     - name: Terraform Init
       run: terraform init
       env:
-        TF_CLI_CONFIG_FILE: ${{ github.workspace }}/.terraformrc
+        TF_CLI_CONFIG_FILE: ${{ github.workspace }}//Users/josephmbatchou/Documents/3-tier-app-tf/terraform.rc
         ATLAS_TOKEN: ${{ env.JOE_TF_ACCESS }}
     # Checks that all Terraform configuration files adhere to a canonical format
     - name: Terraform Format
